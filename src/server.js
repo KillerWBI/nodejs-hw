@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(PinoHttp());
 
-// ✅ Маршрути
+
 app.get("/notes", (req, res) => {
   res.status(200).json({ message: "Retrieved all notes" });
 });
@@ -26,12 +26,12 @@ app.get("/test-error", () => {
   throw new Error("Simulated server error");
 });
 
-// ✅ Обробка 404
+
 app.use((req, res) => {
   res.status(404).json({ message: "Route Not Found" });
 });
 
-// ✅ Обробка помилок (з next!)
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error("Server error:", err.message);
   res.status(500).json({ message: err.message });
