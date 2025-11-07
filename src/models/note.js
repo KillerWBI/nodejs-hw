@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import tags from "../contacts/tags.js";
 
 const noteSchema = new Schema(
   {
@@ -16,16 +17,7 @@ const noteSchema = new Schema(
     tag: {
       type: String,
       enum: [
-        "Work",
-        "Personal",
-        "Meeting",
-        "Shopping",
-        "Ideas",
-        "Travel",
-        "Finance",
-        "Health",
-        "Important",
-        "Todo",
+        ...tags
       ],
       required: false,
       default: "Todo",
