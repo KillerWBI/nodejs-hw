@@ -20,6 +20,7 @@
   "homepage": "https://github.com/KillerWBI/nodejs-hw#readme",
   "description": "",
   "dependencies": {
+    "celebrate": "^15.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "eslint": "^9.38.0",
