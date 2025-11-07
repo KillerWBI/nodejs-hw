@@ -1,7 +1,7 @@
 import { celebrate } from "celebrate";
 import { Router } from "express";
 import { createNote, deleteNote, getAllNotes, getNoteById, updateNote } from "../controllers/notesController.js";
-import { createNoteSchema, getAllNotesSchema, noteIdSchema, updateNoteSchema } from "../validation/noteValidation.js";
+import { createNoteSchema, getAllNotesSchema, noteIdSchema, updateNoteSchema } from "../validations/notesValidation.js";
 
 const router = Router();
 
