@@ -1,8 +1,8 @@
 import { Joi, Segments } from "celebrate";
 import { isValidObjectId } from "mongoose";
-import tags from "../contacts/tags.js"; // перелік тегів із завдання
+import tags from "../constants/tags.js";
 
-// ✅ Кастомна перевірка для ObjectId
+
 const objectIdValidator = (value, helpers) => {
   if (!isValidObjectId(value)) {
     return helpers.error("any.invalid");
