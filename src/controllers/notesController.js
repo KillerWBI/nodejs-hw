@@ -3,12 +3,21 @@ import { Note } from "../models/note.js";
 
 export const getAllNotes = async (req, res) => {
 
-  const { page = 1, perPage = 10  } = req.query;
+  const { page = 1, perPage = 10, tag, search} = req.query;
 
   const skip = (page - 1) * perPage;
 
   const studentsQuery = Note.find();
 
+if (search) {
+   studentsQuery.where({
+  title: { $regex: search, $options: "i" },
+});
+  }
+
+  if(tag) {
+    studentsQuery.where("tag").equals(tag);
+  }
 
   const [totalItems, notes] = await Promise.all([
     studentsQuery.clone().countDocuments(),
