@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { TAGS } from "../constants/tags.js";
 
-export const noteSchema = new Schema(
+const noteSchema = new Schema(
   {
     title: {
       type: String,
@@ -29,7 +29,7 @@ export const noteSchema = new Schema(
   }
 );
 
-noteSchema.index({ title: "text" });
+noteSchema.index({ title: "text", content: "text" });
 
 export const Note = model("Note", noteSchema);
 

@@ -12,7 +12,7 @@ const objectIdValidator = (value, helpers) => {
 
 export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object({
-    page: Joi.number().min(1).default(1),
+    page: Joi.number().min(1).integer().default(1),
     perPage: Joi.number().integer().min(5).max(20).default(10),
     tag: Joi.string().valid(...TAGS).optional(),
     search: Joi.string().allow("").optional(),
@@ -27,9 +27,9 @@ export const noteIdSchema = {
 };
 
 export const createNoteSchema = {
-[ Segments.BODY]: Joi.object({
+[Segments.BODY]: Joi.object({
     title: Joi.string().min(1).required(),
-    content: Joi.string(),
+    content: Joi.string().allow(""),
     tag: Joi.string().valid (...TAGS).optional(),
 })
 
@@ -39,7 +39,7 @@ export const updateNoteSchema = {
     [Segments.PARAMS]: Joi.object({
     noteId: Joi.string().custom(objectIdValidator).required(),
      }),
-    [ Segments.BODY]: Joi.object({
+    [Segments.BODY]: Joi.object({
     title: Joi.string().min(1).optional(),
     content: Joi.string().optional(),
     tag: Joi.string().valid(...TAGS).optional(),
