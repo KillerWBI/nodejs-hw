@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import creatHttpError, { createHttpError } from "http-errors";
+import createHttpError from "http-errors";
 import { Session } from "../models/session.js";
 import { User } from "../models/user.js";
 import { createSession, setSessionCookies } from "../services/auth.js";
@@ -10,7 +10,7 @@ export const registerUser = async (req, res, next) => {
 
     const existingUser = await User.findOne({ email});
     if (existingUser) {
-        return next(creatHttpError(400, "Email in use"));
+        return next(createHttpError(400, "Email in use"));
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -31,11 +31,11 @@ export const loginUser = async (req, res, next) => {
 
     const user = await User.findOne({ email});
     if (!user) {
-        return next(creatHttpError(400, "Email in use"));
+        return next(createHttpError(400, "Email in use"));
     }
     const isValidPassword = await bcrypt.compare(password, User.password);
     if (!isValidPassword) {
-        return next(creatHttpError(401, "Email or password is wrong"));
+        return next(createHttpError(401, "Email or password is wrong"));
     }
 
     await Session.deleteOne({ userId: user._id});
