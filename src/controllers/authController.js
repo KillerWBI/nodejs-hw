@@ -82,3 +82,21 @@ export const refreshUserSession = async (req, res, next) => {
     });
 
   };
+
+  export const logoutUser = async (req, res, next) => {
+
+    const { sessionId } = req.cookies;
+
+    if (!sessionId) {
+        return next(createHttpError(401, "Session not found"));
+    }
+
+    await Session.deleteOne({_id: sessionId});
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.clearCookie("sessionId");
+
+
+    res.status(204);
+  };
