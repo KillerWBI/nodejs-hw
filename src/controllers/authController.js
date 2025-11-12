@@ -31,9 +31,9 @@ export const loginUser = async (req, res, next) => {
 
     const user = await User.findOne({ email});
     if (!user) {
-        return next(createHttpError(400, "Email in use"));
+        return next(createHttpError(401 , "User not found"));
     }
-    const isValidPassword = await bcrypt.compare(password, User.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
         return next(createHttpError(401, "Email or password is wrong"));
     }
@@ -97,5 +97,5 @@ export const refreshUserSession = async (req, res, next) => {
     res.clearCookie("sessionId");
 
 
-    res.status(204);
+    res.sendStatus(204);
   };
