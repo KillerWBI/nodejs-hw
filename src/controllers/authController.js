@@ -6,24 +6,25 @@ import { createSession, setSessionCookies } from "../services/auth.js";
 
 export const registerUser = async (req, res, next) => {
 
-    const { email , password} = req.body;
+   const { email, password } = req.body;
 
-    const existingUser = await User.findOne({ email});
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-        return next(createHttpError(400, "Email in use"));
+      return next(createHttpError(400, "Email in use"));
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-        email,
-        password: hashedPassword,
+      email,
+      password: hashedPassword,
     });
 
     const newSession = await createSession(newUser._id);
     setSessionCookies(res, newSession);
 
-
-    res.status(201).json({newUser});
+    // повертаємо користувача напряму, без обгортки
+    res.status(201).json(newUser);
 };
 
 export const loginUser = async (req, res, next) => {
@@ -35,7 +36,7 @@ export const loginUser = async (req, res, next) => {
     }
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
-        return next(createHttpError(401, "Email or password is wrong"));
+        return next(createHttpError(401, "User not found"));
     }
 
     await Session.deleteOne({ userId: user._id});
@@ -43,6 +44,8 @@ export const loginUser = async (req, res, next) => {
     const newSession = await createSession(user._id);
     setSessionCookies(res, newSession);
 
+    const safeUser = user.toJSON ? user.toJSON() : user;
+    delete safeUser.password;
 
     res.status(200).json(user);
 };
