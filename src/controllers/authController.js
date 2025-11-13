@@ -47,7 +47,7 @@ export const loginUser = async (req, res, next) => {
     const safeUser = user.toJSON ? user.toJSON() : user;
     delete safeUser.password;
 
-    res.status(200).json(user);
+    res.status(200).json(safeUser);
 };
 
 export const refreshUserSession = async (req, res, next) => {
