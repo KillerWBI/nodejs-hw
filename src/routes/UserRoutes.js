@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { updateUserAvatar } from "../controllers/UserController.js";
-import { authenticate } from "../middlewares/authenticate.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 
 const router = Router();
