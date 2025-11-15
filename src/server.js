@@ -9,6 +9,7 @@ import { logger } from "./middleware/logger.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import authRouter from "./routes/authRoutes.js";
 import notesRouter from "./routes/notesRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 
 
@@ -27,7 +28,7 @@ app.use(cookieParser());
 // ===== Routes =====
 app.use("/", notesRouter);
 app.use("/", authRouter);
-app.use("/");
+app.use("/", userRoutes);
 
 // ===== Handlers =====
 app.use(notFoundHandler);
